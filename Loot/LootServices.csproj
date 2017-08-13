@@ -12,8 +12,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Loot</RootNamespace>
-    <AssemblyName>Loot</AssemblyName>
+    <RootNamespace>LootServices</RootNamespace>
+    <AssemblyName>LootServices</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -44,12 +44,36 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="SubSonic.Core, Version=3.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SubSonic.3.0.0.4\lib\SubSonic.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activation" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -66,9 +90,14 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Unity.Wcf, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Wcf.1.0.0\lib\Unity.Wcf.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -78,22 +107,52 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="LootService.svc" />
-    <Content Include="Web.config" />
+    <Content Include="Unity.Wcf.README.txt" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dal\Configurations\BossConfiguration.cs" />
+    <Compile Include="Dal\Configurations\ExpansionConfiguration.cs" />
+    <Compile Include="Dal\Configurations\LootConfiguration.cs" />
+    <Compile Include="Dal\Configurations\PlayerConfiguration.cs" />
+    <Compile Include="Dal\Configurations\RaidConfiguration.cs" />
+    <Compile Include="Dal\Configurations\StatConfiguration.cs" />
+    <Compile Include="Dal\GenericRepository.cs" />
+    <Compile Include="Dal\IGenericRepository.cs" />
+    <Compile Include="Dal\ILootUnitOfWork.cs" />
+    <Compile Include="Dal\LootDbContext.cs" />
+    <Compile Include="Dal\LootUnitOfWork.cs" />
+    <Compile Include="Dal\Repositories\BossRepository.cs" />
+    <Compile Include="Dal\Repositories\ExpansionRepository.cs" />
+    <Compile Include="Dal\Repositories\IBossRepository.cs" />
+    <Compile Include="Dal\Repositories\IExpansionRepository.cs" />
+    <Compile Include="Dal\Repositories\ILootRepository.cs" />
+    <Compile Include="Dal\Repositories\IPlayerRepository.cs" />
+    <Compile Include="Dal\Repositories\IRaidRepository.cs" />
+    <Compile Include="Dal\Repositories\IStatRepository.cs" />
+    <Compile Include="Dal\Repositories\LootRepository.cs" />
+    <Compile Include="Dal\Repositories\PlayerRepository.cs" />
+    <Compile Include="Dal\Repositories\RaidRepository.cs" />
+    <Compile Include="Dal\Repositories\StatRepository.cs" />
+    <Compile Include="Services\Factories\LootServiceFactory.cs" />
     <Compile Include="ILootService.cs" />
     <Compile Include="LootService.svc.cs">
       <DependentUpon>LootService.svc</DependentUpon>
     </Compile>
+    <Compile Include="Models\Boss.cs" />
+    <Compile Include="Models\Expansion.cs" />
+    <Compile Include="Models\Loot.cs" />
+    <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\Raid.cs" />
+    <Compile Include="Models\Stat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WcfServiceFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assemblers\" />
-    <Folder Include="Dal\Configurations\" />
-    <Folder Include="Dal\Repositories\" />
     <Folder Include="Dto\" />
-    <Folder Include="Models\" />
-    <Folder Include="Services\Factories\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
